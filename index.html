@@ -71,18 +71,18 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--violet);outline-off
 .hero h1 em{font-style:normal;color:var(--spark)}
 .hero .lede{margin-top:24px;color:var(--w100)}
 .tagline{font-family:var(--mono);font-size:13px;letter-spacing:.04em;color:var(--w200);margin-top:28px}
-.doors{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:clamp(40px,6vw,72px);border-top:1px solid var(--rule-dark)}
-.door{display:flex;flex-direction:column;gap:10px;padding:24px 24px 28px 0;color:var(--w50);text-decoration:none;border-right:1px solid var(--rule-dark);min-width:0}
-.door + .door{padding-left:24px}
-.door:last-child{border-right:0}
+.doors{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0 28px;margin-top:clamp(40px,6vw,72px)}
+.door{display:flex;flex-direction:column;gap:10px;padding:22px 0 28px;color:var(--w50);text-decoration:none;border-top:1px solid var(--rule-dark);min-width:0}
 .door .who{font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--w200)}
-.door .say{font-family:var(--display);font-size:clamp(20px,1.9vw,24px);line-height:1.15}
+.door .say{font-family:var(--display);font-size:clamp(20px,1.8vw,23px);line-height:1.15}
 .door .go{margin-top:auto;font-size:15px;color:var(--w200);display:flex;align-items:center;gap:8px}
 .door .go span{transition:transform .2s}
+.door:hover{border-top-color:var(--w50)}
 .door:hover .go{color:var(--w50)}
 .door:hover .go span{transform:translateX(4px)}
-@media (max-width:900px){.doors{grid-template-columns:repeat(2,minmax(0,1fr))}.door{border-bottom:1px solid var(--rule-dark)}.door:nth-child(2){border-right:0}.door:nth-child(3){padding-left:0}}
-@media (max-width:520px){.doors{grid-template-columns:minmax(0,1fr)}.door,.door + .door{padding-left:0;border-right:0}}
+@media (max-width:1100px){.doors{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:760px){.doors{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.doors{grid-template-columns:minmax(0,1fr)}.door{padding-bottom:20px}}
 
 /* section heads */
 .head{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:24px clamp(32px,5vw,72px);align-items:end}
@@ -160,6 +160,10 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--violet);outline-off
 @media (max-width:900px){.loop{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:520px){.loop{grid-template-columns:minmax(0,1fr)}}
 
+.solutions{background:var(--sage)}
+.solutions .loop .k{color:var(--forest)}
+.solutions .ask{background:var(--w50)}
+
 /* curious */
 .word{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(32px,5vw,72px);align-items:start;margin-top:clamp(40px,5vw,64px)}
 .dict{border:1px solid var(--w200);border-radius:var(--r);padding:clamp(22px,3vw,32px);background:var(--w100)}
@@ -213,6 +217,7 @@ footer .lockup{color:var(--w50);height:34px}
       <a href="#problem">I have a problem</a>
       <a href="#collective">I solve problems</a>
       <a href="#research">I research problems</a>
+      <a href="#solutions">I have solutions</a>
       <a href="#curious">I'm curious</a>
       <a href="#people">Who we are</a>
     </nav>
@@ -229,6 +234,7 @@ footer .lockup{color:var(--w50);height:34px}
       <a class="door" href="#problem"><span class="who">Leaders</span><span class="say">I have a business problem</span><span class="go">Bring it to us <span aria-hidden="true">→</span></span></a>
       <a class="door" href="#collective"><span class="who">Consultants</span><span class="say">I solve business problems</span><span class="go">Join the Collective <span aria-hidden="true">→</span></span></a>
       <a class="door" href="#research"><span class="who">Researchers</span><span class="say">I research business problems</span><span class="go">Put your work to use <span aria-hidden="true">→</span></span></a>
+      <a class="door" href="#solutions"><span class="who">Providers</span><span class="say">I have solutions</span><span class="go">Show us what works <span aria-hidden="true">→</span></span></a>
       <a class="door" href="#curious"><span class="who">Everyone else</span><span class="say">I'm just curious</span><span class="go">Have a look around <span aria-hidden="true">→</span></span></a>
     </div>
   </div>
@@ -339,11 +345,32 @@ footer .lockup{color:var(--w50);height:34px}
   </div>
 </section>
 
-<!-- PATH 4: CURIOUS -->
+<!-- PATH 4: SOLUTION PROVIDERS (holding text) -->
+<section class="band solutions" id="solutions" aria-labelledby="h-sol">
+  <div class="wrap">
+    <div class="head">
+      <div><p class="pathno"><b>4</b> For solution providers</p>
+      <h2 id="h-sol">You've built something that works. Let's see where it fits.</h2></div>
+      <p class="lede">Some of the best answers to a business problem come ready-made: a specialist service, a SaaS platform, a diagnostic tool or a proven workflow. Our partners see a wide range of client problems, and we want to know which solutions are worth bringing to them.</p>
+    </div>
+    <div class="loop">
+      <div><span class="k">Services</span><h3>Specialist services</h3><p>A focused service that does one part of the job very well.</p></div>
+      <div><span class="k">Software</span><h3>SaaS and platforms</h3><p>Tools that help organisations listen, measure, plan or run the work.</p></div>
+      <div><span class="k">Methods</span><h3>Workflows and models</h3><p>Tested ways of working that our partners could take into the field.</p></div>
+      <div><span class="k">Evidence</span><h3>What we look for</h3><p>Proof that it works for real people in real organisations.</p></div>
+    </div>
+    <div class="ask">
+      <div><h3>Tell us what you've built.</h3><p>What it does, who uses it and how you know it works. We're still shaping how solution partnerships will run, and we'll be in touch as they take form.</p></div>
+      <div class="email"><a class="btn btn-forest" href="mailto:hello@swynke.com.au?subject=Solution%20partnership">Email us</a><span class="addr">hello@swynke.com.au</span><button class="copy" data-copy="hello@swynke.com.au">Copy</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- PATH 5: CURIOUS -->
 <section class="band" id="curious" aria-labelledby="h-cur">
   <div class="wrap">
     <div class="head">
-      <div><p class="pathno"><b>4</b> For the curious</p>
+      <div><p class="pathno"><b>5</b> For the curious</p>
       <h2 id="h-cur">So what is a Swynke?</h2></div>
       <p class="lede">Language doesn't just describe work. It defines it and decides what it's worth. So much about work has changed, but what people need to do their best work hasn't. The name is a reminder.</p>
     </div>
@@ -662,7 +689,7 @@ SwynkeLoops.defs.scattered = {
     <div class="people">
       <div class="person"><div class="av" aria-hidden="true">S</div><span class="role">The Weaver</span><h3>Steph [Surname]</h3><p>Looks after the community, brings new partners in and holds client relationships.</p><p>[One line on background and expertise]</p></div>
       <div class="person"><div class="av" aria-hidden="true">C</div><span class="role">The Alchemist</span><h3>Cecelia [Surname]</h3><p>Designs the consulting model and services, and leads research and research partnerships.</p><p>[One line on background and expertise]</p></div>
-      <div class="person"><div class="av" aria-hidden="true">T</div><span class="role">The Storyteller</span><h3>Tea Uglow</h3><p>Narrative &amp; brand consultant, ex-Google - curates Swynke stories and helps the Collective’s expertise reach people.</p><p>[One line on background and expertise]</p></div>
+      <div class="person"><div class="av" aria-hidden="true">T</div><span class="role">The Storyteller</span><h3>Tea Uglow</h3><p>Narrative &amp; brand consultant, ex-Google - curates Swynke stories and helps the Collective’s expertise reach people.</p></div>
       <div class="person slot"><div class="av" aria-hidden="true">+</div><span class="role">Collective partner</span><h3>[Partner name]</h3><p>[Speciality, and the kinds of problems they've solved]</p></div>
       <div class="person slot"><div class="av" aria-hidden="true">+</div><span class="role">Collective partner</span><h3>[Partner name]</h3><p>[Speciality, and the kinds of problems they've solved]</p></div>
       <div class="person slot"><div class="av" aria-hidden="true">+</div><span class="role">Research partner</span><h3>[Researcher name]</h3><p>[Field, institution and the question they're working on]</p></div>
