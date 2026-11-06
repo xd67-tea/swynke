@@ -8,6 +8,7 @@
  *   GITHUB_TOKEN   fine-grained token, repo xd67-tea/swynke only, Contents: read and write
  *   GITHUB_REPO    xd67-tea/swynke
  *   GITHUB_BRANCH  main (optional)
+ *   SHEET_ID       only if this script was not created from the Sheet's Extensions menu
  */
 
 var KEEP_VERSIONS = 10;      // the brief asked for at least 5
@@ -191,7 +192,14 @@ function publicState_(s) {
 }
 
 function sheet_(name) {
+  // Works whether the script was opened from the Sheet (Extensions > Apps Script)
+  // or created separately, in which case set the SHEET_ID script property.
   var ss = SpreadsheetApp.getActive();
+  if (!ss) {
+    var id = PropertiesService.getScriptProperties().getProperty('SHEET_ID');
+    if (!id) throw new Error('This script isn\'t attached to a Sheet. Add a SHEET_ID script property with the Sheet\'s ID (the long code in its URL between /d/ and /edit).');
+    ss = SpreadsheetApp.openById(id);
+  }
   return ss.getSheetByName(name) || ss.insertSheet(name);
 }
 
