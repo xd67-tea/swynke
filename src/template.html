@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+
+<html lang="en-AU">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta name="description" content="{{meta-description}}">
+<title>Swynke</title>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600&amp;family=IBM+Plex+Mono&amp;family=Young+Serif&amp;display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+img,svg{max-width:100%}
+/* Layout: one page, four doors. A Forest hero asks the wrong question, then four paths run down a Warm 50 page, each on its own ground. Single brand look (light), by choice. */
+:root{
+  color-scheme:light;
+  --ink:#1c2b26;--forest:#2d5a4a;--sage:#dbe5dd;--violet:#5a3e9e;--lilac:#e7e0f3;--spark:#cbe26b;
+  --w50:#f4f2ef;--w100:#e8e4df;--w200:#d6d0c9;--w400:#a69e95;--w500:#90837a;--w700:#5c554f;
+  --rule-dark:rgba(244,242,239,.28);
+  --display:"Young Serif",Georgia,"Times New Roman",serif;
+  --body:"Hanken Grotesk","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --hero:clamp(40px,7vw,80px);--h2:clamp(30px,4.2vw,48px);--h3:clamp(21px,2.2vw,26px);
+  --r:4px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--w50);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--w50)}
+h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:-.01em;line-height:1.06;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:var(--violet)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--violet);outline-offset:3px}
+.dark a:focus-visible,.dark button:focus-visible{outline-color:var(--spark)}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.band{padding-block:clamp(64px,9vw,120px)}
+.kicker{font-family:var(--mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--violet)}
+.dark{color:var(--w50)}
+.dark .kicker{color:var(--w200)}
+.lede{font-size:clamp(18px,1.6vw,21px);max-width:62ch}
+.measure{max-width:66ch}
+.stack{display:flex;flex-direction:column;gap:20px}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 24px;border-radius:999px;font:600 16px/1 var(--body);text-decoration:none;border:0;cursor:pointer}
+.btn-forest{background:var(--forest);color:var(--w50)}
+.btn-forest:hover{background:var(--ink)}
+.btn-light{background:var(--w50);color:var(--forest)}
+.btn-spark{background:var(--spark);color:var(--ink)}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--w50);border-bottom:1px solid var(--w200)}
+.top .wrap{display:flex;align-items:center;gap:16px 32px;min-height:68px;flex-wrap:wrap}
+.lockup{height:30px;width:auto;display:block;color:var(--ink)}
+.paths{display:flex;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none;min-width:0}
+.paths::-webkit-scrollbar{display:none}
+.paths a{flex:none;font-size:15px;color:var(--ink);text-decoration:none;padding:8px 12px;border-radius:999px;white-space:nowrap}
+.paths a:hover{background:var(--w100)}
+.paths a[aria-current="true"]{background:var(--ink);color:var(--w50)}
+@media (max-width:860px){.top .wrap{padding-block:10px}.paths{margin-left:0;width:100%}}
+
+/* hero */
+.hero{background:var(--forest);padding-block:clamp(56px,8vw,104px) clamp(48px,6vw,80px)}
+.intake{display:inline-flex;align-items:center;gap:12px;font-family:var(--mono);font-size:clamp(14px,1.4vw,16px);color:var(--w200);border:1px solid var(--rule-dark);border-radius:var(--r);padding:10px 14px;max-width:100%}
+.intake .q{position:relative}
+.intake .q::after{content:"";position:absolute;left:-2px;right:-2px;top:52%;height:2px;background:var(--w50);transform-origin:left;animation:strike .7s .9s cubic-bezier(.6,0,.2,1) both}
+.intake .tag{font-size:12px;color:var(--ink);background:var(--w200);padding:2px 8px;border-radius:var(--r);animation:fadein .4s 1.6s both}
+@keyframes strike{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes fadein{from{opacity:.0001}to{opacity:1}}
+.hero h1{font-size:var(--hero);max-width:14ch}
+.hero h1 em{font-style:normal;color:var(--spark)}
+.hero .sub{font-family:var(--display);font-size:clamp(22px,2.4vw,30px);line-height:1.2;margin-top:24px;color:var(--w50)}
+.hero .lede{margin-top:14px;color:var(--w100)}
+.tagline{font-family:var(--mono);font-size:13px;letter-spacing:.04em;color:var(--w200);margin-top:28px}
+.doors{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:clamp(40px,6vw,72px);border-top:1px solid var(--rule-dark)}
+.door{display:flex;flex-direction:column;gap:10px;padding:24px 24px 28px 0;color:var(--w50);text-decoration:none;border-right:1px solid var(--rule-dark);min-width:0}
+.door + .door{padding-left:24px}
+.door:last-child{border-right:0}
+.door .who{font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--w200)}
+.door .say{font-family:var(--display);font-size:clamp(20px,1.9vw,24px);line-height:1.15}
+.door .go{margin-top:auto;font-size:15px;color:var(--w200);display:flex;align-items:center;gap:8px}
+.door .go span{transition:transform .2s}
+.door:hover .go{color:var(--w50)}
+.door:hover .go span{transform:translateX(4px)}
+@media (max-width:900px){.doors{grid-template-columns:repeat(2,minmax(0,1fr))}.door{border-bottom:1px solid var(--rule-dark)}.door:nth-child(2){border-right:0}.door:nth-child(3){padding-left:0}}
+@media (max-width:520px){.doors{grid-template-columns:minmax(0,1fr)}.door,.door + .door{padding-left:0;border-right:0}}
+
+/* section heads */
+.head{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:24px clamp(32px,5vw,72px);align-items:end}
+.head h2{font-size:var(--h2)}
+.pathno{font-family:var(--mono);font-size:13px;color:var(--w700);display:flex;gap:10px;align-items:center;margin-bottom:18px}
+.pathno b{font-weight:400;background:var(--ink);color:var(--w50);padding:2px 8px;border-radius:var(--r)}
+.dark .pathno{color:var(--w200)}
+.dark .pathno b{background:var(--w50);color:var(--ink)}
+@media (max-width:820px){.head{grid-template-columns:minmax(0,1fr)}}
+
+/* problem mixer */
+.mixer{margin-top:clamp(40px,5vw,64px);display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);border:1px solid var(--w200);border-radius:var(--r);background:var(--w100)}
+.probs{display:flex;flex-direction:column;border-right:1px solid var(--w200);padding:8px}
+.probs .label{font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--w700);padding:14px 14px 8px}
+.prob{all:unset;box-sizing:border-box;cursor:pointer;padding:14px;border-radius:var(--r);font-size:16px;line-height:1.4;display:flex;gap:12px;align-items:baseline}
+.prob .n{font-family:var(--mono);font-size:12px;color:var(--w700);flex:none}
+.prob:hover{background:var(--w50)}
+.prob[aria-pressed="true"]{background:var(--w50);box-shadow:inset 3px 0 0 var(--forest);font-weight:600}
+.prob:focus-visible{outline:2px solid var(--violet);outline-offset:-2px}
+.mix{padding:clamp(20px,3vw,36px);background:var(--w50);display:flex;flex-direction:column;gap:22px;min-width:0}
+.mix .quote{font-family:var(--display);font-size:clamp(22px,2.4vw,30px);line-height:1.15}
+.bar{display:flex;height:56px;border-radius:var(--r);overflow:hidden;gap:2px;background:var(--w50)}
+.seg{height:100%;transition:flex-basis .6s cubic-bezier(.3,.7,.2,1);flex:0 0 0%;min-width:0;position:relative}
+.seg span{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:13px;white-space:nowrap}
+.legend{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.legend li{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:12px;align-items:baseline;padding:10px 0;border-top:1px solid var(--w200)}
+.legend .sw{width:14px;height:14px;border-radius:2px;align-self:center}
+.legend .pct{font-family:var(--mono);font-size:14px;font-variant-numeric:tabular-nums}
+.legend small{display:block;color:var(--w700);font-size:14px}
+.mix .note{font-family:var(--mono);font-size:12px;color:var(--w700)}
+@media (max-width:860px){.mixer{grid-template-columns:minmax(0,1fr)}.probs{border-right:0;border-bottom:1px solid var(--w200)}}
+
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,40px);margin-top:clamp(56px,7vw,88px)}
+.step{border-top:2px solid var(--ink);padding-top:18px;display:flex;flex-direction:column;gap:10px}
+.step .k{font-family:var(--mono);font-size:13px;color:var(--w700)}
+.step h3{font-size:var(--h3)}
+.why{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(32px,5vw,72px);margin-top:clamp(48px,6vw,72px)}
+.why div{padding:22px 0;border-top:1px solid var(--w200);display:flex;flex-direction:column;gap:6px}
+.why h3{font-size:var(--h3)}
+.why p{color:var(--w700);max-width:52ch}
+@media (max-width:760px){.steps,.why{grid-template-columns:minmax(0,1fr)}}
+
+/* email ask */
+.ask{margin-top:clamp(48px,6vw,72px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px 40px;align-items:center;padding:clamp(24px,3vw,36px);border-radius:var(--r);background:var(--sage)}
+.ask h3{font-size:var(--h3)}
+.ask p{margin-top:8px;color:var(--w700)}
+.email{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.addr{font-family:var(--mono);font-size:15px;user-select:all}
+.copy{all:unset;cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;padding:6px 10px;border:1px solid currentColor;border-radius:var(--r);opacity:.8}
+.copy:hover{opacity:1}
+.copy:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+@media (max-width:760px){.ask{grid-template-columns:minmax(0,1fr)}}
+
+/* collective */
+.collective{background:var(--ink)}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(32px,5vw,72px);margin-top:clamp(40px,5vw,64px)}
+.list{list-style:none;margin:0;padding:0}
+.list li{padding:16px 0;border-top:1px solid var(--rule-dark);display:grid;grid-template-columns:minmax(0,1fr);gap:4px}
+.list b{font-weight:600}
+.dark .list span{color:var(--w400)}
+.collective .head p{color:var(--w200)}
+.collective h3{font-size:var(--h3);margin-bottom:12px}
+.collective .ask{background:transparent;border:1px solid var(--rule-dark)}
+.collective .ask p{color:var(--w400)}
+@media (max-width:760px){.cols{grid-template-columns:minmax(0,1fr)}}
+
+/* research */
+.research{background:var(--lilac)}
+.loop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;margin-top:clamp(40px,5vw,64px)}
+.loop div{background:var(--w50);padding:22px;display:flex;flex-direction:column;gap:8px}
+.loop .k{font-family:var(--mono);font-size:12px;color:var(--violet);letter-spacing:.04em;text-transform:uppercase}
+.loop h3{font-size:21px}
+.loop p{color:var(--w700);font-size:16px}
+.research .ask{background:var(--w50)}
+@media (max-width:900px){.loop{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.loop{grid-template-columns:minmax(0,1fr)}}
+
+/* curious */
+.word{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(32px,5vw,72px);align-items:start;margin-top:clamp(40px,5vw,64px)}
+.dict{border:1px solid var(--w200);border-radius:var(--r);padding:clamp(22px,3vw,32px);background:var(--w100)}
+.dict .hw{font-family:var(--display);font-size:clamp(40px,5vw,60px);line-height:1}
+.dict .pr{font-family:var(--mono);font-size:14px;color:var(--w700);margin-top:8px}
+.dict ol{margin:18px 0 0;padding-left:22px;display:flex;flex-direction:column;gap:8px}
+.princ{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px}
+.princ div{padding:16px 0;border-top:1px solid var(--w200)}
+.princ h3{font-size:21px}
+.princ p{color:var(--w700);font-size:16px;margin-top:4px}
+.motion{margin-top:clamp(48px,6vw,72px);display:flex;flex-direction:column;gap:14px}
+.motion-frame{border-radius:var(--r);overflow:hidden;max-width:100%}
+.soon{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2vw,24px);margin-top:clamp(48px,6vw,72px)}
+.card{border:1px dashed var(--w400);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:10px;min-height:190px}
+.card .k{font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--violet)}
+.card h3{font-size:21px}
+.card p{color:var(--w700);font-size:16px}
+.card .frame{margin-top:auto;aspect-ratio:16/9;max-width:100%;background:var(--forest);border-radius:var(--r);display:grid;place-items:center;color:var(--w200);font-family:var(--mono);font-size:12px}
+@media (max-width:860px){.word,.soon{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.princ{grid-template-columns:minmax(0,1fr)}}
+
+/* people */
+.people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,24px);margin-top:clamp(40px,5vw,56px)}
+.person{display:flex;flex-direction:column;gap:12px;padding:22px;border-radius:var(--r);background:var(--w100)}
+.av{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-size:30px;background:var(--forest);color:var(--w50)}
+.person .role{font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--violet)}
+.person h3{font-size:24px}
+.person p{color:var(--w700);font-size:16px}
+.person.slot{background:transparent;border:1px dashed var(--w400)}
+.person.slot .av{background:transparent;border:1px dashed var(--w400);color:var(--w700);font-family:var(--mono);font-size:20px}
+@media (max-width:860px){.people{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.people{grid-template-columns:minmax(0,1fr)}}
+
+/* footer */
+footer{background:var(--ink);padding-block:56px 40px}
+footer .lockup{color:var(--w50);height:34px}
+.foot{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end}
+.foot .tl{font-family:var(--display);font-size:clamp(22px,2.4vw,30px);margin-top:28px;max-width:20ch}
+.foot .meta{font-family:var(--mono);font-size:13px;color:var(--w400);display:flex;flex-direction:column;gap:6px;text-align:right}
+.foot .meta a{color:var(--w50)}
+.foot .meta a:hover{color:var(--spark)}
+@media (max-width:700px){.foot{grid-template-columns:minmax(0,1fr)}.foot .meta{text-align:left}}
+</style>
+</head>
+<body>
+<header class="top">
+<div class="wrap">
+<a aria-label="Swynke, back to top" href="#top"><svg aria-label="Swynke" class="lockup" role="img" viewbox="0 -126.86184210526312 5348.948333333334 1268.6184210526314" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 -126.86184210526312) scale(7.551300125313283) translate(-30 -16)"><path d="M44 172 V80 L64 28 L92 60 H108 L136 28 L156 80 V172 Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="12"></path><path d="M68 116 C 76 104, 90 104, 96 116 C 90 128, 76 128, 68 116 Z" fill="currentColor"></path><path d="M104 116 C 110 104, 124 104, 132 116 C 124 128, 110 128, 104 116 Z" fill="currentColor"></path></g><g transform="translate(1361.9483333333333 800)"><path d="M619 -523Q616 -522 613.0 -520.5Q610 -519 607 -519Q599 -519 590 -531Q526 -611 464.0 -646.0Q402 -681 336 -681Q296 -681 267.5 -660.0Q239 -639 239 -594Q239 -557 262.0 -533.0Q285 -509 321.5 -493.5Q358 -478 396 -467Q453 -451 508.5 -431.0Q564 -411 609.0 -383.5Q654 -356 681.0 -316.5Q708 -277 708 -221Q708 -153 673.5 -100.0Q639 -47 574.0 -17.0Q509 13 417 13Q372 13 332.5 1.5Q293 -10 256 -28Q248 -32 241 -32Q232 -32 232 -22Q232 -19 234 -11Q237 -4 237 1Q237 12 220 12H170Q152 12 145 -2L24 -229Q20 -237 20 -241Q20 -252 31 -258L75 -283Q78 -285 81.0 -286.0Q84 -287 87 -287Q97 -287 104 -275Q172 -172 254.5 -122.0Q337 -72 423 -72Q488 -72 523.0 -101.5Q558 -131 558 -176Q558 -220 536.0 -245.0Q514 -270 468.0 -287.0Q422 -304 350 -325Q301 -339 253.0 -359.0Q205 -379 166.0 -407.5Q127 -436 103.5 -475.5Q80 -515 80 -569Q80 -635 113.5 -678.0Q147 -721 204.0 -741.5Q261 -762 333 -762Q389 -762 428.0 -748.0Q467 -734 488 -722Q505 -712 511 -712Q516 -712 516 -718Q516 -723 513.5 -732.0Q511 -741 511 -751Q511 -766 529 -766H565Q583 -766 590 -749L660 -570Q662 -566 663.0 -562.5Q664 -559 664 -556Q664 -547 653 -541Z M1614 -500Q1629 -500 1629 -485V-455Q1629 -440 1614 -440H1599Q1583 -440 1570.5 -428.0Q1558 -416 1541 -378L1382 -11Q1378 0 1367 0H1310Q1299 0 1294 -11L1162 -317L1030 -11Q1026 0 1014 0H958Q947 0 942 -11L784 -377Q768 -415 757.0 -427.5Q746 -440 726 -440H724Q709 -440 709 -455V-485Q709 -500 724 -500H955Q970 -500 970 -485V-455Q970 -440 955 -440H953Q934 -440 926.5 -432.5Q919 -425 919 -411Q919 -398 925.5 -381.0Q932 -364 940 -345L1020 -158L1106 -371Q1119 -401 1119 -419Q1119 -440 1098 -440H1076Q1063 -440 1063 -455V-485Q1063 -500 1077 -500H1317Q1332 -500 1332 -485V-455Q1332 -440 1317 -440H1305Q1286 -440 1278.5 -432.5Q1271 -425 1271 -411Q1271 -398 1277.0 -381.0Q1283 -364 1291 -345L1372 -158L1458 -371Q1471 -401 1471 -419Q1471 -440 1450 -440H1430Q1415 -440 1415 -455V-485Q1415 -500 1430 -500Z M2202 -500Q2217 -500 2217 -485V-455Q2217 -440 2202 -440H2188Q2172 -440 2160.0 -427.5Q2148 -415 2130 -378L1840 206Q1834 219 1820 213L1769 187Q1755 181 1761 167L1873 -73L1726 -377Q1708 -414 1698.0 -427.0Q1688 -440 1668 -440H1666Q1651 -440 1651 -455V-485Q1651 -500 1666 -500H1897Q1912 -500 1912 -485V-455Q1912 -440 1897 -440H1895Q1863 -440 1863 -414Q1863 -401 1870.0 -383.5Q1877 -366 1886 -346L1953 -200L2025 -348Q2036 -369 2043.0 -387.5Q2050 -406 2050 -419Q2050 -440 2027 -440H2009Q1994 -440 1994 -455V-485Q1994 -500 2009 -500Z M2804 -326V-155Q2804 -100 2821.5 -80.0Q2839 -60 2868 -60H2876Q2891 -60 2891 -45V-15Q2891 0 2876 0H2610Q2595 0 2595 -15V-45Q2595 -60 2610 -60H2617Q2638 -60 2651.0 -80.0Q2664 -100 2664 -155V-326Q2664 -374 2649.0 -399.5Q2634 -425 2592 -425Q2567 -425 2542.0 -412.5Q2517 -400 2498.0 -380.5Q2479 -361 2470 -339V-155Q2470 -115 2487.5 -87.5Q2505 -60 2534 -60H2536Q2551 -60 2551 -45V-15Q2551 0 2536 0H2255Q2240 0 2240 -15V-45Q2240 -60 2255 -60H2257Q2294 -60 2312.0 -87.5Q2330 -115 2330 -155V-281Q2330 -308 2326.5 -333.0Q2323 -358 2310.5 -375.5Q2298 -393 2270 -396Q2259 -397 2259 -409V-443Q2259 -453 2273 -456Q2345 -467 2396.5 -490.0Q2448 -513 2468 -527Q2473 -531 2476 -531H2477Q2479 -531 2479 -529Q2479 -527 2478 -521L2461 -398Q2475 -421 2498.0 -447.5Q2521 -474 2555.0 -493.5Q2589 -513 2634 -513Q2688 -513 2722.0 -497.0Q2756 -481 2773.5 -454.0Q2791 -427 2797.5 -394.0Q2804 -361 2804 -326Z M3517 -60Q3530 -60 3530 -45V-15Q3530 0 3515 0H3270Q3255 0 3255 -15V-46Q3255 -60 3268 -60H3283Q3293 -60 3301.5 -64.0Q3310 -68 3310 -75Q3310 -82 3302 -90L3170 -233L3149 -214V-155Q3149 -116 3152.5 -95.5Q3156 -75 3167.5 -67.5Q3179 -60 3203 -60Q3218 -60 3218 -45V-15Q3218 0 3203 0H2936Q2921 0 2921 -15V-45Q2921 -60 2936 -60Q2973 -60 2991.0 -87.5Q3009 -115 3009 -155V-530Q3009 -557 3005.5 -582.0Q3002 -607 2989.5 -624.5Q2977 -642 2949 -645Q2938 -646 2938 -658V-692Q2938 -698 2941.5 -700.5Q2945 -703 2952 -705Q3032 -731 3076.0 -757.0Q3120 -783 3140 -798Q3143 -800 3145 -800H3147Q3149 -800 3149 -798V-302L3271 -413Q3279 -421 3279 -427Q3279 -440 3259 -440H3229Q3216 -440 3216 -455V-485Q3216 -500 3231 -500H3453Q3468 -500 3468 -485V-455Q3468 -440 3455 -440H3443Q3414 -440 3391.5 -425.0Q3369 -410 3330 -375L3253 -306L3467 -91Q3484 -74 3494.0 -67.0Q3504 -60 3514 -60Z M3657 -179Q3674 -137 3711.5 -104.0Q3749 -71 3807 -71Q3839 -71 3874.0 -89.0Q3909 -107 3935 -145Q3938 -150 3943 -150Q3948 -150 3953.5 -147.0Q3959 -144 3983 -130Q3987 -127 3987 -122Q3987 -115 3981 -105Q3953 -53 3905.0 -20.0Q3857 13 3780 13Q3697 13 3637.0 -24.0Q3577 -61 3544.5 -122.0Q3512 -183 3512 -255Q3512 -324 3532.5 -373.5Q3553 -423 3587.0 -453.5Q3621 -484 3663.5 -498.5Q3706 -513 3750 -513Q3800 -513 3838.0 -493.5Q3876 -474 3902.5 -444.0Q3929 -414 3942.5 -380.5Q3956 -347 3956 -318Q3956 -310 3947 -306ZM3806 -322Q3806 -370 3783.0 -401.0Q3760 -432 3725 -432Q3684 -432 3660.0 -399.5Q3636 -367 3636 -318Q3636 -303 3637.5 -281.0Q3639 -259 3645 -241Z" fill="currentColor"></path></g></svg></a>
+<nav aria-label="Paths" class="paths">
+<a data-k="menu-01" href="#problem">{{menu-01}}</a>
+<a data-k="menu-02" href="#collective">{{menu-02}}</a>
+<a data-k="menu-03" href="#research">{{menu-03}}</a>
+<a data-k="menu-04" href="#curious">{{menu-04}}</a>
+<a data-k="menu-05" href="#people">{{menu-05}}</a>
+</nav>
+</div>
+</header>
+<main id="top">
+<section aria-labelledby="h-hero" class="hero dark">
+<div class="wrap">
+<h1 data-k="hero-01" id="h-hero">{{hero-01}}</h1>
+<p class="sub" data-k="hero-02">{{hero-02}}</p>
+<p class="lede" data-k="hero-03">{{hero-03}}</p>
+<p class="tagline" data-k="hero-04">{{hero-04}}</p>
+<div class="doors">
+<a class="door" href="#problem"><span class="who" data-k="hero-05">{{hero-05}}</span><span class="say" data-k="hero-06">{{hero-06}}</span><span class="go"><span data-k="hero-13">{{hero-13}}</span> <span aria-hidden="true">→</span></span></a>
+<a class="door" href="#collective"><span class="who" data-k="hero-07">{{hero-07}}</span><span class="say" data-k="hero-08">{{hero-08}}</span><span class="go"><span data-k="hero-14">{{hero-14}}</span> <span aria-hidden="true">→</span></span></a>
+<a class="door" href="#research"><span class="who" data-k="hero-09">{{hero-09}}</span><span class="say" data-k="hero-10">{{hero-10}}</span><span class="go"><span data-k="hero-15">{{hero-15}}</span> <span aria-hidden="true">→</span></span></a>
+<a class="door" href="#curious"><span class="who" data-k="hero-11">{{hero-11}}</span><span class="say" data-k="hero-12">{{hero-12}}</span><span class="go"><span data-k="hero-16">{{hero-16}}</span> <span aria-hidden="true">→</span></span></a>
+</div>
+</div>
+</section>
+<!-- PATH 1: CLIENTS -->
+<section aria-labelledby="h-problem" class="band" id="problem">
+<div class="wrap">
+<div class="head">
+<div><p class="pathno" data-k="problem-01">{{problem-01}}</p>
+<h2 data-k="problem-02" id="h-problem">{{problem-02}}</h2></div>
+<p class="lede" data-k="problem-03">{{problem-03}}</p>
+</div>
+<div class="mixer">
+<div aria-label="Example problems" class="probs" role="group">
+<p class="label" data-k="problem-04">{{problem-04}}</p>
+<button aria-pressed="true" class="prob" data-i="0"><span class="n">A</span><span data-k="problem-33">{{problem-33}}</span></button>
+<button aria-pressed="false" class="prob" data-i="1"><span class="n">B</span><span data-k="problem-34">{{problem-34}}</span></button>
+<button aria-pressed="false" class="prob" data-i="2"><span class="n">C</span><span data-k="problem-35">{{problem-35}}</span></button>
+<button aria-pressed="false" class="prob" data-i="3"><span class="n">D</span><span data-k="problem-36">{{problem-36}}</span></button>
+<button aria-pressed="false" class="prob" data-i="4"><span class="n">E</span><span data-k="problem-37">{{problem-37}}</span></button>
+</div>
+<div aria-live="polite" class="mix">
+<p class="kicker" data-k="problem-10">{{problem-10}}</p>
+<p class="quote" id="mixQuote"></p>
+<div aria-hidden="true" class="bar" id="mixBar"></div>
+<ul class="legend" id="mixLegend"></ul>
+<p class="note" data-k="problem-11">{{problem-11}}</p>
+</div>
+</div>
+<div class="steps">
+<div class="step"><span class="k" data-k="problem-12">{{problem-12}}</span><h3 data-k="problem-13">{{problem-13}}</h3><p data-k="problem-14">{{problem-14}}</p></div>
+<div class="step"><span class="k" data-k="problem-15">{{problem-15}}</span><h3 data-k="problem-16">{{problem-16}}</h3><p data-k="problem-17">{{problem-17}}</p></div>
+<div class="step"><span class="k" data-k="problem-18">{{problem-18}}</span><h3 data-k="problem-19">{{problem-19}}</h3><p data-k="problem-20">{{problem-20}}</p></div>
+</div>
+<div class="why">
+<div><h3 data-k="problem-21">{{problem-21}}</h3><p data-k="problem-22">{{problem-22}}</p></div>
+<div><h3 data-k="problem-23">{{problem-23}}</h3><p data-k="problem-24">{{problem-24}}</p></div>
+<div><h3 data-k="problem-25">{{problem-25}}</h3><p data-k="problem-26">{{problem-26}}</p></div>
+<div><h3 data-k="problem-27">{{problem-27}}</h3><p data-k="problem-28">{{problem-28}}</p></div>
+</div>
+<div class="ask">
+<div><h3 data-k="problem-29">{{problem-29}}</h3><p data-k="problem-30">{{problem-30}}</p></div>
+<div class="email"><a class="btn btn-forest" data-k="problem-31" href="mailto:hello@swynke.com.au?subject=A%20problem%20we%27re%20working%20on">{{problem-31}}</a><span class="addr" data-k="problem-32">{{problem-32}}</span><button class="copy" data-copy="hello@swynke.com.au">Copy</button></div>
+</div>
+</div>
+</section>
+<!-- PATH 2: CONSULTANTS -->
+<section aria-labelledby="h-coll" class="band collective dark" id="collective">
+<div class="wrap">
+<div class="head">
+<div><p class="pathno" data-k="collective-01">{{collective-01}}</p>
+<h2 data-k="collective-02" id="h-coll">{{collective-02}}</h2></div>
+<p class="lede" data-k="collective-03">{{collective-03}}</p>
+</div>
+<div class="cols">
+<div>
+<h3 data-k="collective-04">{{collective-04}}</h3>
+<ul class="list">
+<li><b data-k="collective-05">{{collective-05}}</b><span data-k="collective-06">{{collective-06}}</span></li>
+<li><b data-k="collective-07">{{collective-07}}</b><span data-k="collective-08">{{collective-08}}</span></li>
+<li><b data-k="collective-09">{{collective-09}}</b><span data-k="collective-10">{{collective-10}}</span></li>
+<li><b data-k="collective-11">{{collective-11}}</b><span data-k="collective-12">{{collective-12}}</span></li>
+<li><b data-k="collective-13">{{collective-13}}</b><span data-k="collective-14">{{collective-14}}</span></li>
+<li><b data-k="collective-15">{{collective-15}}</b><span data-k="collective-16">{{collective-16}}</span></li>
+</ul>
+</div>
+<div>
+<h3 data-k="collective-17">{{collective-17}}</h3>
+<ul class="list">
+<li><b data-k="collective-18">{{collective-18}}</b><span data-k="collective-19">{{collective-19}}</span></li>
+<li><b data-k="collective-20">{{collective-20}}</b><span data-k="collective-21">{{collective-21}}</span></li>
+<li><b data-k="collective-22">{{collective-22}}</b><span data-k="collective-23">{{collective-23}}</span></li>
+<li><b data-k="collective-24">{{collective-24}}</b><span data-k="collective-25">{{collective-25}}</span></li>
+</ul>
+</div>
+</div>
+<div class="ask">
+<div><h3 data-k="collective-26">{{collective-26}}</h3><p data-k="collective-27">{{collective-27}}</p></div>
+<div class="email"><a class="btn btn-spark" data-k="collective-28" href="mailto:hello@swynke.com.au?subject=Joining%20the%20Collective">{{collective-28}}</a><span class="addr" data-k="collective-29">{{collective-29}}</span><button class="copy" data-copy="hello@swynke.com.au">Copy</button></div>
+</div>
+</div>
+</section>
+<!-- PATH 3: RESEARCHERS -->
+<section aria-labelledby="h-res" class="band research" id="research">
+<div class="wrap">
+<div class="head">
+<div><p class="pathno" data-k="research-01">{{research-01}}</p>
+<h2 data-k="research-02" id="h-res">{{research-02}}</h2></div>
+<p class="lede" data-k="research-03">{{research-03}}</p>
+</div>
+<div class="loop">
+<div><span class="k" data-k="research-04">{{research-04}}</span><h3 data-k="research-05">{{research-05}}</h3><p data-k="research-06">{{research-06}}</p></div>
+<div><span class="k" data-k="research-07">{{research-07}}</span><h3 data-k="research-08">{{research-08}}</h3><p data-k="research-09">{{research-09}}</p></div>
+<div><span class="k" data-k="research-10">{{research-10}}</span><h3 data-k="research-11">{{research-11}}</h3><p data-k="research-12">{{research-12}}</p></div>
+<div><span class="k" data-k="research-13">{{research-13}}</span><h3 data-k="research-14">{{research-14}}</h3><p data-k="research-15">{{research-15}}</p></div>
+</div>
+<div class="ask">
+<div><h3 data-k="research-16">{{research-16}}</h3><p data-k="research-17">{{research-17}}</p></div>
+<div class="email"><a class="btn btn-forest" data-k="research-18" href="mailto:hello@swynke.com.au?subject=Research%20partnership">{{research-18}}</a><span class="addr" data-k="research-19">{{research-19}}</span><button class="copy" data-copy="hello@swynke.com.au">Copy</button></div>
+</div>
+</div>
+</section>
+<!-- PATH 4: CURIOUS -->
+<section aria-labelledby="h-cur" class="band" id="curious">
+<div class="wrap">
+<div class="head">
+<div><p class="pathno" data-k="curious-01">{{curious-01}}</p>
+<h2 data-k="curious-02" id="h-cur">{{curious-02}}</h2></div>
+<p class="lede" data-k="curious-03">{{curious-03}}</p>
+</div>
+<div class="word">
+<div class="dict">
+<p class="hw" data-k="curious-04">{{curious-04}}</p>
+<p class="pr" data-k="curious-05">{{curious-05}}</p>
+<ol><li data-k="curious-06">{{curious-06}}</li><li data-k="curious-07">{{curious-07}}</li></ol>
+</div>
+<div>
+<p class="kicker" data-k="curious-08" style="margin-bottom:8px">{{curious-08}}</p>
+<div class="princ">
+<div><h3 data-k="curious-09">{{curious-09}}</h3><p data-k="curious-10">{{curious-10}}</p></div>
+<div><h3 data-k="curious-11">{{curious-11}}</h3><p data-k="curious-12">{{curious-12}}</p></div>
+<div><h3 data-k="curious-13">{{curious-13}}</h3><p data-k="curious-14">{{curious-14}}</p></div>
+<div><h3 data-k="curious-15">{{curious-15}}</h3><p data-k="curious-16">{{curious-16}}</p></div>
+</div>
+</div>
+</div>
+<div class="motion">
+<p class="kicker">In 13 seconds</p>
+<div class="motion-frame">
+<!-- Swynke animation: The expertise already exists. Paste into an Elementor HTML widget. -->
+<div class="swynke-loop" data-format="auto" data-loop="scattered" style="display:block;width:100%;max-width:1280px;margin:0 auto"></div>
+<script>
+/* Swynke loops: runtime.
+   Each loop draws on a fixed stage (1920 x 1080 landscape or 1080 x 1080 square)
+   that is scaled to fit its container. All motion uses the Web Animations API on
+   one shared loop length, so a loop can be paused, seeked and rendered to video. */
+(function () {
+  var R = (window.SwynkeLoops = window.SwynkeLoops || { defs: {}, instances: [] });
+  if (R.ready) return;
+  R.ready = true;
+
+  R.C = {
+    ink: '#1c2b26', forest: '#2d5a4a', sage: '#dbe5dd', violet: '#5a3e9e', lilac: '#e7e0f3',
+    chartreuse: '#cbe26b', amber: '#b2a08b', w50: '#f4f2ef', w100: '#e8e4df', w200: '#d6d0c9',
+    w400: '#a69e95', w500: '#90837a', w700: '#5c554f', w900: '#2e2a27', ruleDark: 'rgba(244,242,239,0.28)'
+  };
+  R.F = {
+    display: '"Young Serif", Georgia, "Times New Roman", serif',
+    body: '"Hanken Grotesk", "Helvetica Neue", Arial, sans-serif',
+    mono: '"IBM Plex Mono", ui-monospace, Menlo, monospace'
+  };
+  var EASE = 'cubic-bezier(.22,.7,.2,1)';
+  R.EASE = EASE;
+
+  R.ensureFonts = function () {
+    if (window.SwynkeLoopsNoFontLink || document.getElementById('swynke-loop-fonts')) return;
+    var l = document.createElement('link');
+    l.id = 'swynke-loop-fonts';
+    l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@400;600&family=IBM+Plex+Mono&display=swap';
+    document.head.appendChild(l);
+    R.fontLink = new Promise(function (res) { l.onload = res; l.onerror = res; setTimeout(res, 3000); });
+  };
+
+  /* Resolves once the three faces are usable (or after a short timeout). */
+  R.fontsReady = function () {
+    if (R._fonts) return R._fonts;
+    var link = R.fontLink || Promise.resolve();
+    R._fonts = link.then(function () {
+      if (!document.fonts || !document.fonts.load) return;
+      return Promise.race([
+        Promise.all(['104px "Young Serif"', '30px "Hanken Grotesk"', '600 30px "Hanken Grotesk"', '24px "IBM Plex Mono"'].map(function (f) { return document.fonts.load(f); })),
+        new Promise(function (res) { setTimeout(res, 3000); })
+      ]);
+    }).catch(function () {});
+    return R._fonts;
+  };
+
+  /* Element helper: el(parent, tag, cssText, html) */
+  R.el = function (parent, tag, css, html) {
+    var e = document.createElement(tag);
+    if (css) e.style.cssText = css;
+    if (html != null) e.innerHTML = html;
+    if (parent) parent.appendChild(e);
+    return e;
+  };
+
+  /* Seeded random, so the scatter is the same on every play. */
+  R.rand = function (seed) {
+    var s = seed >>> 0;
+    return function () { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
+  };
+
+  /* Text styles at deck sizes. */
+  R.txt = {
+    kicker: function (c) { return 'font-family:' + R.F.mono + ';font-size:24px;letter-spacing:.04em;color:' + c + ';'; },
+    statement: function (c) { return 'font-family:' + R.F.display + ';font-size:104px;line-height:1.02;letter-spacing:-.01em;text-wrap:balance;color:' + c + ';'; },
+    title: function (c) { return 'font-family:' + R.F.display + ';font-size:60px;line-height:1.08;letter-spacing:-.01em;text-wrap:balance;color:' + c + ';'; },
+    body: function (c) { return 'font-family:' + R.F.body + ';font-size:30px;line-height:1.45;color:' + c + ';'; },
+    mono: function (c, size) { return 'font-family:' + R.F.mono + ';font-size:' + (size || 24) + 'px;letter-spacing:.04em;color:' + c + ';'; }
+  };
+
+  /* Timeline factory. keys: [[seconds, {css props}], ...] in time order.
+     Holds the first value before the first key and the last value after the last key. */
+  R.timeline = function (L) {
+    var anims = [];
+    function track(el, keys, opts) {
+      opts = opts || {};
+      var frames = [];
+      var first = keys[0], last = keys[keys.length - 1];
+      if (first[0] > 0) frames.push(Object.assign({}, first[1], { offset: 0, easing: 'linear' }));
+      keys.forEach(function (k) {
+        frames.push(Object.assign({}, k[1], { offset: Math.min(1, Math.max(0, k[0] / L)), easing: k[2] || opts.easing || EASE }));
+      });
+      if (last[0] < L) frames.push(Object.assign({}, last[1], { offset: 1 }));
+      var a = el.animate(frames, { duration: L * 1000, iterations: Infinity, fill: 'both' });
+      anims.push(a);
+      return a;
+    }
+    /* Shortcut: fade and rise in at t, optionally out at tOut. */
+    function enter(el, t, tOut, opts) {
+      opts = opts || {};
+      var d = opts.d || 0.8, dy = opts.dy == null ? 24 : opts.dy, out = opts.out || 0.6;
+      var keys = [
+        [t, { opacity: 0, transform: 'translateY(' + dy + 'px)' }],
+        [t + d, { opacity: 1, transform: 'translateY(0px)' }]
+      ];
+      if (tOut != null) {
+        keys.push([tOut, { opacity: 1, transform: 'translateY(0px)' }]);
+        keys.push([tOut + out, { opacity: 0, transform: 'translateY(' + (opts.dyOut == null ? -12 : opts.dyOut) + 'px)' }]);
+      }
+      return track(el, keys);
+    }
+    return { track: track, enter: enter, anims: anims, L: L };
+  };
+
+  /* Build one loop into a container. Returns a controller. */
+  R.mount = function (host, opts) {
+    opts = opts || {};
+    var name = host.getAttribute('data-loop');
+    var def = R.defs[name];
+    if (!def) return null;
+    host.setAttribute('data-ready', '1');
+    var fmtAttr = opts.format || host.getAttribute('data-format') || 'auto';
+    var shadow = opts.noShadow ? host : (host.shadowRoot || host.attachShadow({ mode: 'open' }));
+    var ctl = { name: name, host: host, anims: [], L: def.L, still: def.still, playing: true };
+    var current = null;
+
+    function fmtFor(width) {
+      if (fmtAttr === 'square' || fmtAttr === 'landscape') return fmtAttr;
+      return width < 640 ? 'square' : 'landscape';
+    }
+
+    function build() {
+      var width = host.clientWidth || 960;
+      var fmt = fmtFor(width);
+      if (current && current.fmt === fmt) return fit();
+      ctl.anims.forEach(function (a) { a.cancel(); });
+      shadow.innerHTML = '';
+      var W = fmt === 'square' ? 1080 : 1920, H = 1080;
+      var frame = R.el(shadow, 'div', 'position:relative;width:100%;aspect-ratio:' + W + '/' + H + ';overflow:hidden;border-radius:' + (opts.radius == null ? 4 : opts.radius) + 'px;');
+      frame.setAttribute('role', 'img');
+      var stage = R.el(frame, 'div', 'position:absolute;left:0;top:0;width:' + W + 'px;height:' + H + 'px;transform-origin:0 0;overflow:hidden;');
+      var tl = R.timeline(def.L);
+      var info = def.build(stage, { W: W, H: H, sq: fmt === 'square', tl: tl, R: R });
+      frame.setAttribute('aria-label', info && info.label ? info.label : name);
+      ctl.anims = tl.anims;
+      current = { fmt: fmt, frame: frame, stage: stage, W: W };
+      fit();
+      if (ctl.reduced) ctl.seek(def.still);
+      else if (!ctl.playing) ctl.anims.forEach(function (a) { a.pause(); });
+    }
+    function fit() {
+      if (!current) return;
+      var w = current.frame.clientWidth || current.W;
+      current.stage.style.transform = 'scale(' + (w / current.W) + ')';
+    }
+    ctl.seek = function (t) {
+      ctl.anims.forEach(function (a) { a.pause(); a.currentTime = t * 1000; });
+    };
+    ctl.play = function () { if (ctl.reduced) return; ctl.playing = true; ctl.anims.forEach(function (a) { a.play(); }); };
+    ctl.pause = function () { ctl.playing = false; ctl.anims.forEach(function (a) { a.pause(); }); };
+
+    ctl.reduced = !opts.render && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var start = function () {
+      build();
+      if (opts.render) return;
+      if (window.ResizeObserver) new ResizeObserver(function () { build(); }).observe(host);
+      if (window.IntersectionObserver) {
+        new IntersectionObserver(function (es) {
+          es.forEach(function (e) { if (e.isIntersecting) ctl.play(); else ctl.pause(); });
+        }, { threshold: 0.15 }).observe(host);
+      }
+    };
+    ctl.ready = R.fontsReady().then(start);
+    R.instances.push(ctl);
+    return ctl;
+  };
+
+  R.init = function () {
+    R.ensureFonts();
+    var nodes = document.querySelectorAll('.swynke-loop:not([data-ready])');
+    for (var i = 0; i < nodes.length; i++) {
+      var n = nodes[i];
+      if (R.defs[n.getAttribute('data-loop')]) {
+        n.style.display = 'block';
+        R.mount(n);
+      }
+    }
+  };
+})();
+
+/* Loop 1. The expertise already exists. It's just scattered. (Forest) */
+SwynkeLoops.defs.scattered = {
+  L: 13, still: 10,
+  build: function (stage, o) {
+    var R = o.R, C = R.C, el = R.el, tl = o.tl, W = o.W, H = o.H, sq = o.sq, M = 120;
+    stage.style.background = C.forest;
+
+    var roles = ['Organisational psychologist', 'Technologist', 'HR practitioner', 'Behavioural scientist',
+      'Researcher', 'Change lead', 'Data analyst', 'Operations lead', 'Communications lead', 'Workplace designer'];
+    if (sq) roles = roles.slice(0, 7);
+    var chips = roles.map(function (r) {
+      return el(stage, 'div', 'position:absolute;left:0;top:0;white-space:nowrap;padding:14px 22px;border-radius:4px;background:' + C.ink + ';' + R.txt.mono(C.w200, 24), r);
+    });
+
+    var kicker = el(stage, 'div', 'position:absolute;left:' + M + 'px;top:' + M + 'px;' + R.txt.kicker(C.chartreuse), 'WHY SWYNKE EXISTS');
+    var textBox = el(stage, 'div', 'position:absolute;left:' + M + 'px;right:' + M + 'px;bottom:' + M + 'px;');
+    var s1 = el(textBox, 'div', R.txt.statement(C.w50) + 'max-width:' + (sq ? 15 : 18) + 'ch;');
+    var a = el(s1, 'span', 'display:inline-block', 'The expertise already exists.');
+    el(s1, 'span', '', ' ');
+    var b = el(s1, 'span', 'display:inline-block', 'It’s just scattered.');
+    var s2wrap = el(textBox, 'div', 'position:absolute;left:0;right:0;bottom:0;');
+    var s2 = el(s2wrap, 'div', R.txt.statement(C.w50) + 'max-width:16ch;', 'Swynke brings it together.');
+    var s2b = el(s2wrap, 'div', R.txt.body(C.sage) + 'max-width:' + (sq ? 30 : 46) + 'ch;margin-top:28px;', 'Senior specialists in technology, HR and behavioural science, working as one team.');
+
+    /* Scatter positions: spread over the stage, kept clear of the statement block. */
+    var rnd = R.rand(7);
+    var textTop = H - M - s1.offsetHeight - 30;
+    var placed = [];
+    var scatter = chips.map(function (c, i) {
+      var w = c.offsetWidth, h = c.offsetHeight, x, y, tries = 0;
+      do {
+        x = 40 + rnd() * (W - w - 80);
+        y = 180 + rnd() * (textTop - 180 - h);
+        tries++;
+      } while (tries < 600 && chips.slice(0, i).some(function (p, j) {
+        var q = placed[j]; return x < q.x + p.offsetWidth + 28 && q.x < x + w + 28 && y < q.y + h + 18 && q.y < y + h + 18;
+      }));
+      placed.push({ x: x, y: y });
+      return { x: x, y: y, r: (rnd() - 0.5) * 8 };
+    });
+    /* Gathered: a tight block, rows packed left to right. */
+    var gap = 14, rowW = sq ? W - 2 * M : 1000, gx0 = sq ? M : W - M - rowW, gy0 = sq ? 190 : 200;
+    var rows = [[]], cur = 0;
+    chips.forEach(function (c, i) {
+      var w = c.offsetWidth;
+      if (cur + w > rowW && rows[rows.length - 1].length) { rows.push([]); cur = 0; }
+      rows[rows.length - 1].push(i); cur += w + gap;
+    });
+    var gather = [];
+    rows.forEach(function (row, ri) {
+      var total = row.reduce(function (s, i) { return s + chips[i].offsetWidth; }, 0) + gap * (row.length - 1);
+      var x = gx0 + (sq ? 0 : rowW - total);
+      row.forEach(function (i) {
+        gather[i] = { x: x, y: gy0 + ri * (chips[i].offsetHeight + gap) };
+        x += chips[i].offsetWidth + gap;
+      });
+    });
+
+    chips.forEach(function (c, i) {
+      var s = scatter[i], g = gather[i], dx = (rnd() - 0.5) * (sq ? 30 : 60), dy = (rnd() - 0.5) * (sq ? 16 : 40);
+      var at = function (p, r) { return 'translate(' + p.x + 'px,' + p.y + 'px) rotate(' + r + 'deg)'; };
+      var drift = { x: s.x + dx, y: s.y + dy };
+      var t0 = 0.2 + i * 0.12, tg = 6.0 + i * 0.07;
+      tl.track(c, [
+        [t0, { opacity: 0, transform: at(s, s.r) }],
+        [t0 + 0.8, { opacity: 0.85, transform: at({ x: s.x + dx * 0.2, y: s.y + dy * 0.2 }, s.r) }],
+        [tg, { opacity: 0.85, transform: at(drift, s.r * 0.6) }, 'cubic-bezier(.6,0,.2,1)'],
+        [tg + 1.4, { opacity: 1, transform: at(g, 0) }],
+        [11.9, { opacity: 1, transform: at(g, 0) }],
+        [12.6, { opacity: 0, transform: at(g, 0) }, 'linear'],
+        [12.95, { opacity: 0, transform: at(s, s.r) }]
+      ]);
+      /* Chips turn Sage once gathered, the team. */
+      tl.track(c, [[tg + 0.9, { background: C.ink, color: C.w200 }], [tg + 1.5, { background: C.sage, color: C.ink }], [12.6, { background: C.sage, color: C.ink }], [12.95, { background: C.ink, color: C.w200 }]]);
+    });
+
+    tl.enter(kicker, 0.3, 12.0);
+    tl.enter(a, 1.0, 5.4, { dy: 30 });
+    tl.enter(b, 2.4, 5.4, { dy: 30 });
+    tl.enter(s2, 7.6, 12.0, { dy: 30 });
+    tl.enter(s2b, 8.5, 12.0);
+    return { label: 'The expertise already exists. It’s just scattered. Swynke brings it together: senior specialists in technology, HR and behavioural science, working as one team.' };
+  }
+};
+
+
+(function(){var go=function(){SwynkeLoops.init();};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
+</script>
+</div>
+</div>
+<div class="soon">
+<div class="card"><span class="k" data-k="curious-17">{{curious-17}}</span><h3 data-k="curious-18">{{curious-18}}</h3><p data-k="curious-19">{{curious-19}}</p></div>
+<div class="card"><span class="k" data-k="curious-20">{{curious-20}}</span><h3 data-k="curious-21">{{curious-21}}</h3><p data-k="curious-22">{{curious-22}}</p></div>
+</div>
+<div class="ask">
+<div><h3 data-k="curious-23">{{curious-23}}</h3><p data-k="curious-24">{{curious-24}}</p></div>
+<div class="email"><a class="btn btn-forest" data-k="curious-25" href="mailto:hello@swynke.com.au?subject=Keep%20me%20posted">{{curious-25}}</a><span class="addr" data-k="curious-26">{{curious-26}}</span><button class="copy" data-copy="hello@swynke.com.au">Copy</button></div>
+</div>
+</div>
+</section>
+<!-- PEOPLE -->
+<section aria-labelledby="h-people" class="band" id="people" style="background:var(--w100)">
+<div class="wrap">
+<div class="head">
+<div><p class="kicker" data-k="people-01" style="margin-bottom:18px">{{people-01}}</p>
+<h2 data-k="people-02" id="h-people">{{people-02}}</h2></div>
+<p class="lede" data-k="people-03">{{people-03}}</p>
+</div>
+<div class="people">
+<div class="person"><div aria-hidden="true" class="av">S</div><span class="role" data-k="people-04">{{people-04}}</span><h3 data-k="people-05">{{people-05}}</h3><p data-k="people-06">{{people-06}}</p><p data-k="people-07">{{people-07}}</p></div>
+<div class="person"><div aria-hidden="true" class="av">C</div><span class="role" data-k="people-08">{{people-08}}</span><h3 data-k="people-09">{{people-09}}</h3><p data-k="people-10">{{people-10}}</p><p data-k="people-11">{{people-11}}</p></div>
+<div class="person"><div aria-hidden="true" class="av">T</div><span class="role" data-k="people-12">{{people-12}}</span><h3 data-k="people-13">{{people-13}}</h3><p data-k="people-14">{{people-14}}</p></div>
+<div class="person slot"><div aria-hidden="true" class="av">+</div><span class="role" data-k="people-15">{{people-15}}</span><h3 data-k="people-16">{{people-16}}</h3><p data-k="people-17">{{people-17}}</p></div>
+<div class="person slot"><div aria-hidden="true" class="av">+</div><span class="role" data-k="people-18">{{people-18}}</span><h3 data-k="people-19">{{people-19}}</h3><p data-k="people-20">{{people-20}}</p></div>
+<div class="person slot"><div aria-hidden="true" class="av">+</div><span class="role" data-k="people-21">{{people-21}}</span><h3 data-k="people-22">{{people-22}}</h3><p data-k="people-23">{{people-23}}</p></div>
+</div>
+</div>
+</section>
+</main>
+<footer class="dark">
+<div class="wrap foot">
+<div><svg aria-label="Swynke" class="lockup" role="img" viewbox="0 -126.86184210526312 5348.948333333334 1268.6184210526314" xmlns="http://www.w3.org/2000/svg"><g transform="translate(0 -126.86184210526312) scale(7.551300125313283) translate(-30 -16)"><path d="M44 172 V80 L64 28 L92 60 H108 L136 28 L156 80 V172 Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="12"></path><path d="M68 116 C 76 104, 90 104, 96 116 C 90 128, 76 128, 68 116 Z" fill="currentColor"></path><path d="M104 116 C 110 104, 124 104, 132 116 C 124 128, 110 128, 104 116 Z" fill="currentColor"></path></g><g transform="translate(1361.9483333333333 800)"><path d="M619 -523Q616 -522 613.0 -520.5Q610 -519 607 -519Q599 -519 590 -531Q526 -611 464.0 -646.0Q402 -681 336 -681Q296 -681 267.5 -660.0Q239 -639 239 -594Q239 -557 262.0 -533.0Q285 -509 321.5 -493.5Q358 -478 396 -467Q453 -451 508.5 -431.0Q564 -411 609.0 -383.5Q654 -356 681.0 -316.5Q708 -277 708 -221Q708 -153 673.5 -100.0Q639 -47 574.0 -17.0Q509 13 417 13Q372 13 332.5 1.5Q293 -10 256 -28Q248 -32 241 -32Q232 -32 232 -22Q232 -19 234 -11Q237 -4 237 1Q237 12 220 12H170Q152 12 145 -2L24 -229Q20 -237 20 -241Q20 -252 31 -258L75 -283Q78 -285 81.0 -286.0Q84 -287 87 -287Q97 -287 104 -275Q172 -172 254.5 -122.0Q337 -72 423 -72Q488 -72 523.0 -101.5Q558 -131 558 -176Q558 -220 536.0 -245.0Q514 -270 468.0 -287.0Q422 -304 350 -325Q301 -339 253.0 -359.0Q205 -379 166.0 -407.5Q127 -436 103.5 -475.5Q80 -515 80 -569Q80 -635 113.5 -678.0Q147 -721 204.0 -741.5Q261 -762 333 -762Q389 -762 428.0 -748.0Q467 -734 488 -722Q505 -712 511 -712Q516 -712 516 -718Q516 -723 513.5 -732.0Q511 -741 511 -751Q511 -766 529 -766H565Q583 -766 590 -749L660 -570Q662 -566 663.0 -562.5Q664 -559 664 -556Q664 -547 653 -541Z M1614 -500Q1629 -500 1629 -485V-455Q1629 -440 1614 -440H1599Q1583 -440 1570.5 -428.0Q1558 -416 1541 -378L1382 -11Q1378 0 1367 0H1310Q1299 0 1294 -11L1162 -317L1030 -11Q1026 0 1014 0H958Q947 0 942 -11L784 -377Q768 -415 757.0 -427.5Q746 -440 726 -440H724Q709 -440 709 -455V-485Q709 -500 724 -500H955Q970 -500 970 -485V-455Q970 -440 955 -440H953Q934 -440 926.5 -432.5Q919 -425 919 -411Q919 -398 925.5 -381.0Q932 -364 940 -345L1020 -158L1106 -371Q1119 -401 1119 -419Q1119 -440 1098 -440H1076Q1063 -440 1063 -455V-485Q1063 -500 1077 -500H1317Q1332 -500 1332 -485V-455Q1332 -440 1317 -440H1305Q1286 -440 1278.5 -432.5Q1271 -425 1271 -411Q1271 -398 1277.0 -381.0Q1283 -364 1291 -345L1372 -158L1458 -371Q1471 -401 1471 -419Q1471 -440 1450 -440H1430Q1415 -440 1415 -455V-485Q1415 -500 1430 -500Z M2202 -500Q2217 -500 2217 -485V-455Q2217 -440 2202 -440H2188Q2172 -440 2160.0 -427.5Q2148 -415 2130 -378L1840 206Q1834 219 1820 213L1769 187Q1755 181 1761 167L1873 -73L1726 -377Q1708 -414 1698.0 -427.0Q1688 -440 1668 -440H1666Q1651 -440 1651 -455V-485Q1651 -500 1666 -500H1897Q1912 -500 1912 -485V-455Q1912 -440 1897 -440H1895Q1863 -440 1863 -414Q1863 -401 1870.0 -383.5Q1877 -366 1886 -346L1953 -200L2025 -348Q2036 -369 2043.0 -387.5Q2050 -406 2050 -419Q2050 -440 2027 -440H2009Q1994 -440 1994 -455V-485Q1994 -500 2009 -500Z M2804 -326V-155Q2804 -100 2821.5 -80.0Q2839 -60 2868 -60H2876Q2891 -60 2891 -45V-15Q2891 0 2876 0H2610Q2595 0 2595 -15V-45Q2595 -60 2610 -60H2617Q2638 -60 2651.0 -80.0Q2664 -100 2664 -155V-326Q2664 -374 2649.0 -399.5Q2634 -425 2592 -425Q2567 -425 2542.0 -412.5Q2517 -400 2498.0 -380.5Q2479 -361 2470 -339V-155Q2470 -115 2487.5 -87.5Q2505 -60 2534 -60H2536Q2551 -60 2551 -45V-15Q2551 0 2536 0H2255Q2240 0 2240 -15V-45Q2240 -60 2255 -60H2257Q2294 -60 2312.0 -87.5Q2330 -115 2330 -155V-281Q2330 -308 2326.5 -333.0Q2323 -358 2310.5 -375.5Q2298 -393 2270 -396Q2259 -397 2259 -409V-443Q2259 -453 2273 -456Q2345 -467 2396.5 -490.0Q2448 -513 2468 -527Q2473 -531 2476 -531H2477Q2479 -531 2479 -529Q2479 -527 2478 -521L2461 -398Q2475 -421 2498.0 -447.5Q2521 -474 2555.0 -493.5Q2589 -513 2634 -513Q2688 -513 2722.0 -497.0Q2756 -481 2773.5 -454.0Q2791 -427 2797.5 -394.0Q2804 -361 2804 -326Z M3517 -60Q3530 -60 3530 -45V-15Q3530 0 3515 0H3270Q3255 0 3255 -15V-46Q3255 -60 3268 -60H3283Q3293 -60 3301.5 -64.0Q3310 -68 3310 -75Q3310 -82 3302 -90L3170 -233L3149 -214V-155Q3149 -116 3152.5 -95.5Q3156 -75 3167.5 -67.5Q3179 -60 3203 -60Q3218 -60 3218 -45V-15Q3218 0 3203 0H2936Q2921 0 2921 -15V-45Q2921 -60 2936 -60Q2973 -60 2991.0 -87.5Q3009 -115 3009 -155V-530Q3009 -557 3005.5 -582.0Q3002 -607 2989.5 -624.5Q2977 -642 2949 -645Q2938 -646 2938 -658V-692Q2938 -698 2941.5 -700.5Q2945 -703 2952 -705Q3032 -731 3076.0 -757.0Q3120 -783 3140 -798Q3143 -800 3145 -800H3147Q3149 -800 3149 -798V-302L3271 -413Q3279 -421 3279 -427Q3279 -440 3259 -440H3229Q3216 -440 3216 -455V-485Q3216 -500 3231 -500H3453Q3468 -500 3468 -485V-455Q3468 -440 3455 -440H3443Q3414 -440 3391.5 -425.0Q3369 -410 3330 -375L3253 -306L3467 -91Q3484 -74 3494.0 -67.0Q3504 -60 3514 -60Z M3657 -179Q3674 -137 3711.5 -104.0Q3749 -71 3807 -71Q3839 -71 3874.0 -89.0Q3909 -107 3935 -145Q3938 -150 3943 -150Q3948 -150 3953.5 -147.0Q3959 -144 3983 -130Q3987 -127 3987 -122Q3987 -115 3981 -105Q3953 -53 3905.0 -20.0Q3857 13 3780 13Q3697 13 3637.0 -24.0Q3577 -61 3544.5 -122.0Q3512 -183 3512 -255Q3512 -324 3532.5 -373.5Q3553 -423 3587.0 -453.5Q3621 -484 3663.5 -498.5Q3706 -513 3750 -513Q3800 -513 3838.0 -493.5Q3876 -474 3902.5 -444.0Q3929 -414 3942.5 -380.5Q3956 -347 3956 -318Q3956 -310 3947 -306ZM3806 -322Q3806 -370 3783.0 -401.0Q3760 -432 3725 -432Q3684 -432 3660.0 -399.5Q3636 -367 3636 -318Q3636 -303 3637.5 -281.0Q3639 -259 3645 -241Z" fill="currentColor"></path></g></svg><p class="tl" data-k="footer-01">{{footer-01}}</p></div>
+<div class="meta"><a data-k="footer-02" href="mailto:hello@swynke.com.au">{{footer-02}}</a><span data-k="footer-03">{{footer-03}}</span><span data-k="footer-04">{{footer-04}}</span></div>
+</div>
+</footer>
+<script>
+(function(){
+  var C={forest:'#2d5a4a',violet:'#5a3e9e',w400:'#a69e95',sage:'#dbe5dd',lilac:'#e7e0f3'};
+  var order=[C.forest,C.violet,C.w400,C.sage,C.lilac];
+  var ink=['#f4f2ef','#f4f2ef','#1c2b26','#1c2b26','#1c2b26'];
+  var P={{__mixer}};
+  var bar=document.getElementById('mixBar'),leg=document.getElementById('mixLegend'),quote=document.getElementById('mixQuote');
+  for(var i=0;i<5;i++){var s=document.createElement('div');s.className='seg';s.style.background=order[i];s.style.color=ink[i];s.appendChild(document.createElement('span'));bar.appendChild(s);}
+  function show(n){
+    var p=P[n];quote.textContent='‘'+p.q+'’';
+    var segs=bar.children;leg.innerHTML='';
+    for(var j=0;j<segs.length;j++){segs[j].style.flexBasis='0%';segs[j].style.display=j<p.m.length?'':'none';segs[j].firstChild.textContent='';}
+    p.m.forEach(function(m,i){
+      segs[i].style.flexBasis=m[1]+'%';segs[i].firstChild.textContent=m[1]>=15?m[1]+'%':'';
+      var li=document.createElement('li');
+      li.innerHTML='<span class="sw" style="background:'+order[i]+(i>=3?';outline:1px solid #a69e95;outline-offset:-1px':'')+'"></span><span><b style="font-weight:600"></b><small></small></span><span class="pct">'+m[1]+'%</span>';
+      li.querySelector('b').textContent=m[0];li.querySelector('small').textContent=m[2];leg.appendChild(li);
+    });
+    document.querySelectorAll('.prob').forEach(function(b){b.setAttribute('aria-pressed',String(+b.dataset.i===n));});
+  }
+  document.querySelectorAll('.prob').forEach(function(b){b.addEventListener('click',function(){show(+b.dataset.i);});});
+  show(0);
+  window.swynkeMix=function(np){P=np;var b=document.querySelector('.prob[aria-pressed="true"]');show(b?+b.dataset.i:0);};
+
+  document.querySelectorAll('.copy').forEach(function(b){b.addEventListener('click',function(){
+    var t=b.dataset.copy;function ok(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy';},1600);}
+    function fallback(){var a=b.previousElementSibling;var r=document.createRange();r.selectNodeContents(a);var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected';}
+    try{navigator.clipboard.writeText(t).then(ok,fallback);}catch(e){fallback();}
+  });});
+
+  var links={};document.querySelectorAll('.paths a').forEach(function(a){links[a.getAttribute('href').slice(1)]=a;});
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){for(var k in links)links[k].removeAttribute('aria-current');var l=links[e.target.id];if(l){l.setAttribute('aria-current','true');var nav=l.parentNode;if(nav.scrollWidth>nav.clientWidth){nav.scrollLeft=l.offsetLeft-nav.offsetLeft-16;}}}});},{rootMargin:'-45% 0px -50% 0px'});
+    Object.keys(links).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});
+  }
+})();
+</script>
+</body>
+</html>

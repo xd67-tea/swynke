@@ -1,0 +1,298 @@
+{
+ "menu-01": "I have a problem",
+ "menu-02": "I solve problems",
+ "menu-03": "I research problems",
+ "menu-04": "I'm curious",
+ "menu-05": "Who we are",
+ "hero-01": "Swynke specialises in <em>specialists.</em>",
+ "hero-02": "The right blend of experts, on one contract.",
+ "hero-03": "Swynke handles the contracts so independent consultants can find and bring in the right expertise to scale on spec, helps clients brief the right blend of expertise for their problem, and brings active research and the latest tools to the work.",
+ "hero-04": "Swynke. An old word for work. A better way to do it.",
+ "hero-05": "Leaders",
+ "hero-06": "I have a business problem",
+ "hero-07": "Consultants",
+ "hero-08": "I solve business problems",
+ "hero-09": "Researchers",
+ "hero-10": "I research business problems",
+ "hero-11": "Everyone else",
+ "hero-12": "I'm just curious",
+ "problem-01": "<b>1</b> For leaders with a business problem",
+ "page-01": "1",
+ "problem-02": "Most business problems don't come in one speciality's shape.",
+ "problem-03": "An AI rollout stalls for reasons that are part technology, part job design and part trust. That's why we don't publish a list of services. We have a deep network of people who have solved every kind of problem, and we bring in the fraction of each speciality yours needs.",
+ "problem-04": "Pick a problem",
+ "problem-10": "Who it takes",
+ "problem-11": "Illustrative. Every engagement starts with a diagnosis, and the mix comes from that.",
+ "problem-12": "Step 1",
+ "problem-13": "Diagnose",
+ "problem-14": "We start by understanding the problem as your people experience it, before anyone proposes a fix.",
+ "problem-15": "Step 2",
+ "problem-16": "Assemble",
+ "problem-17": "We bring in the specialists the problem needs, in the proportions it needs. You deal with one team and one point of contact.",
+ "problem-18": "Step 3",
+ "problem-19": "Build capability",
+ "problem-20": "We work alongside your people, so the skill stays with you. Success means you need us less over time.",
+ "problem-21": "Experts, not juniors",
+ "problem-22": "The people who scope your work are the people who do it. No pyramid of graduates learning on your budget, so it's faster and costs less.",
+ "problem-23": "We say when we don't know",
+ "problem-24": "And we know someone who does. A network this deep means nobody has to bluff their way through a problem outside their field.",
+ "problem-25": "Diverse by design",
+ "problem-26": "Different disciplines, backgrounds and ways of seeing a problem. That's how we catch what a single lens misses.",
+ "problem-27": "Open about money",
+ "problem-28": "You see what each part costs and who is doing it. Our partners see budgets and splits before a proposal goes out.",
+ "problem-29": "Tell us the problem, in your own words.",
+ "problem-30": "Yours isn't on the list above? That's normal. A few sentences is plenty.",
+ "problem-31": "Email us",
+ "problem-32": "hello@swynke.com.au",
+ "collective-01": "<b>2</b> For consultants",
+ "page-02": "2",
+ "collective-02": "Join the Collective. Keep your independence.",
+ "collective-03": "You're very good at what you do. But you can't bid for larger projects alone, and business development eats the time you'd rather spend on the work. Swynke gives you the scale of a firm while you keep your own practice.",
+ "collective-04": "What you get",
+ "collective-05": "Bigger work",
+ "collective-06": "Win projects no single practitioner could, such as an HR system rollout paired with culture coaching.",
+ "collective-07": "A core team behind you",
+ "collective-08": "Scoping, proposals, contracts and billing are handled, so you can focus on the work.",
+ "collective-09": "Leads, shared and paid for",
+ "collective-10": "Pass on work outside your scope and get paid for the referral.",
+ "collective-11": "Open revenue splits",
+ "collective-12": "You see the budget and your share before a proposal goes out.",
+ "collective-13": "Peers and research",
+ "collective-14": "A community of senior specialists, and research-backed frameworks to take into the field.",
+ "collective-15": "Your call on how much",
+ "collective-16": "Take on as much or as little as suits you.",
+ "collective-17": "What we ask",
+ "collective-18": "Real mastery",
+ "collective-19": "Deep expertise in your field, and practice grounded in evidence instead of fads.",
+ "collective-20": "Say when you don't know",
+ "collective-21": "Then trust the network to find someone who does.",
+ "collective-22": "Share the work",
+ "collective-23": "If a client needs something outside your scope, bring it to the Collective.",
+ "collective-24": "Feed back what you learn",
+ "collective-25": "What you see in the field helps the whole Collective, and our research partners, get better.",
+ "collective-26": "Tell us what you're great at.",
+ "collective-27": "Send a short note about your field, the problems you've solved and a link to your work. We'll set up a conversation.",
+ "collective-28": "Email us",
+ "collective-29": "hello@swynke.com.au",
+ "research-01": "<b>3</b> For researchers",
+ "page-03": "3",
+ "research-02": "Your evidence, put to work and credited.",
+ "research-03": "Industry wants evidence-based approaches, and researchers hold many of the answers. But findings can take years to reach the people who could use them. Swynke is a two-way bridge. We care about scientific method, and we'd like to put our strength behind yours.",
+ "research-04": "Your work",
+ "research-05": "Applied",
+ "research-06": "We use current research in real client organisations.",
+ "research-07": "Your name",
+ "research-08": "Credited",
+ "research-09": "Full attribution wherever your work shapes ours.",
+ "research-10": "Your findings",
+ "research-11": "Made practical",
+ "research-12": "We help turn theory into tools that practitioners can pick up and use.",
+ "research-13": "Back to you",
+ "research-14": "Field insight",
+ "research-15": "What we learn in practice flows back to you, along with wider visibility for your work.",
+ "research-16": "Tell us what you're studying.",
+ "research-17": "A paper, a model or a question you want to test in practice. We'll get back to you about how it could fit.",
+ "research-18": "Email us",
+ "research-19": "hello@swynke.com.au",
+ "curious-01": "<b>4</b> For the curious",
+ "page-04": "4",
+ "curious-02": "So what is a Swynke?",
+ "curious-03": "Language doesn't just describe work. It defines it and decides what it's worth. So much about work has changed, but what people need to do their best work hasn't. The name is a reminder.",
+ "curious-04": "swynke",
+ "curious-05": "noun · verb · an old word",
+ "curious-06": "Work; labour; toil.",
+ "curious-07": "To work hard at something.",
+ "curious-08": "What we stand for",
+ "curious-09": "Evidence",
+ "curious-10": "We take on hard problems and change our minds when the evidence says so.",
+ "curious-11": "Care",
+ "curious-12": "We look after the people behind the work, and everyone is part of it.",
+ "curious-13": "Reciprocity",
+ "curious-14": "We give as much as we take, and we share the work.",
+ "curious-15": "Stewardship",
+ "curious-16": "We leave clients, partners and research stronger than we found them.",
+ "curious-17": "Coming",
+ "curious-18": "Workplace myths, tested",
+ "curious-19": "Short, science-based pieces on what the evidence actually says about engagement, leadership traits and more.",
+ "curious-20": "Coming",
+ "curious-21": "The Swynke podcast",
+ "curious-22": "Organisational psychologists and researchers in conversation with the people running organisations.",
+ "curious-23": "Want to hear when they're out?",
+ "curious-24": "Email us and we'll add you to the list. One note when something new is ready, nothing more.",
+ "curious-25": "Email us",
+ "curious-26": "hello@swynke.com.au",
+ "people-01": "Who we are",
+ "people-02": "The core team, and the Collective growing around it.",
+ "people-03": "The core team runs the hub: finding the work, scoping it, contracts and billing. We're practitioners too, so we work on client projects alongside our partners.",
+ "people-04": "The Weaver",
+ "people-05": "Steph [Surname]",
+ "people-06": "Looks after the community, brings new partners in and holds client relationships.",
+ "people-07": "[One line on background and expertise]",
+ "people-08": "The Alchemist",
+ "people-09": "Cecelia [Surname]",
+ "people-10": "Designs the consulting model and services, and leads research and research partnerships.",
+ "people-11": "[One line on background and expertise]",
+ "people-12": "The Storyteller",
+ "people-13": "Tea Uglow",
+ "people-14": "Narrative &amp; brand consultant, ex-Google - curates Swynke stories and helps the Collective’s expertise reach people.",
+ "people-15": "Collective partner",
+ "people-16": "[Partner name]",
+ "people-17": "[Speciality, and the kinds of problems they've solved]",
+ "people-18": "Collective partner",
+ "people-19": "[Partner name]",
+ "people-20": "[Speciality, and the kinds of problems they've solved]",
+ "people-21": "Research partner",
+ "people-22": "[Researcher name]",
+ "people-23": "[Field, institution and the question they're working on]",
+ "footer-01": "An old word for work. A better way to do it.",
+ "footer-02": "hello@swynke.com.au",
+ "footer-03": "ABN 74 694 332 557",
+ "footer-04": "Australia",
+ "hero-13": "Bring it to us",
+ "hero-14": "Join the Collective",
+ "hero-15": "Put your work to use",
+ "hero-16": "Have a look around",
+ "problem-33": "'We rolled out the new system and nobody uses it.'",
+ "problem-34": "'Engagement dropped after the restructure.'",
+ "problem-35": "'We merged two teams and the cultures won't mix.'",
+ "problem-36": "'Our best managers are burning out.'",
+ "problem-37": "'The board wants a five-year plan. We can barely deliver this year.'",
+ "meta-description": "The right blend of experts, on one contract. Swynke helps consultants scale, helps clients brief the right expertise, and brings active research and the latest tools to the work.",
+ "__mixer": [
+  {
+   "q": "We rolled out the new system and nobody uses it.",
+   "m": [
+    [
+     "Workplace technology",
+     40,
+     "How the system was set up, and where it fights the work"
+    ],
+    [
+     "Organisational psychology",
+     25,
+     "Trust, habit and why people work around it"
+    ],
+    [
+     "Workflow design",
+     20,
+     "Fitting the tool into the actual flow of work"
+    ],
+    [
+     "Change communications",
+     10,
+     "An honest story about what changes and why"
+    ],
+    [
+     "Learning design",
+     5,
+     "Skills people need to use it with confidence"
+    ]
+   ]
+  },
+  {
+   "q": "Engagement dropped after the restructure.",
+   "m": [
+    [
+     "Organisational design",
+     45,
+     "Roles and reporting lines that drifted from the work"
+    ],
+    [
+     "People analytics",
+     25,
+     "What the survey is really saying, by team"
+    ],
+    [
+     "Leadership coaching",
+     20,
+     "Managers holding teams through uncertainty"
+    ],
+    [
+     "Internal communications",
+     10,
+     "Closing the gap between announcement and reality"
+    ]
+   ]
+  },
+  {
+   "q": "We merged two teams and the cultures won't mix.",
+   "m": [
+    [
+     "Culture research",
+     35,
+     "Listening sessions to hear what each side values"
+    ],
+    [
+     "Executive advisory",
+     30,
+     "Leaders agreeing on what the new team stands for"
+    ],
+    [
+     "Organisational design",
+     15,
+     "Structures that stop rewarding the old split"
+    ],
+    [
+     "Change communications",
+     12,
+     "A shared story, told honestly"
+    ],
+    [
+     "HR integration",
+     8,
+     "One set of policies, pay and processes"
+    ]
+   ]
+  },
+  {
+   "q": "Our best managers are burning out.",
+   "m": [
+    [
+     "Job design",
+     50,
+     "Spans of control and what a manager is really asked to do"
+    ],
+    [
+     "Wellbeing science",
+     30,
+     "What the evidence says about load and recovery"
+    ],
+    [
+     "Leadership capability",
+     20,
+     "Coaching to delegate and hold boundaries"
+    ]
+   ]
+  },
+  {
+   "q": "The board wants a five-year plan. We can barely deliver this year.",
+   "m": [
+    [
+     "Executive advisory",
+     35,
+     "Balancing today’s targets with a multi-year transition"
+    ],
+    [
+     "Workforce planning",
+     25,
+     "The capability you will need, and when"
+    ],
+    [
+     "Performance measures",
+     20,
+     "One view across HR, operations and finance"
+    ],
+    [
+     "Change leadership",
+     12,
+     "Keeping people with you through the transition"
+    ],
+    [
+     "Behavioural science",
+     8,
+     "Designing for how people actually respond to change"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,238 @@
+<!-- Swynke editor: injected into the site page by Code.gs. Not part of the live site. -->
+<style>
+  :root{--ed-bar:#1c2b26;--ed-text:#f4f2ef;--ed-muted:#a69e95;--ed-focus:#5a3e9e;--ed-ok:#cbe26b;--ed-warn:#e7e0f3}
+  body.ed-editing{padding-bottom:88px}
+  body.ed-editing [data-k]{outline:1px dashed transparent;outline-offset:3px;border-radius:2px;cursor:text;transition:outline-color .15s}
+  body.ed-editing [data-k]:hover{outline-color:rgba(90,62,158,.55)}
+  body.ed-editing [data-k]:focus{outline:2px solid var(--ed-focus);outline-offset:3px}
+  body.ed-editing .dark [data-k]:focus{outline-color:var(--ed-ok)}
+  body.ed-editing [data-k].ed-changed{box-shadow:inset 0 -2px 0 rgba(203,226,107,.9)}
+  .ed-bar{position:fixed;left:0;right:0;bottom:0;z-index:100;background:var(--ed-bar);color:var(--ed-text);font:14px/1.4 "Hanken Grotesk",Arial,sans-serif;border-top:1px solid rgba(244,242,239,.2);padding:12px max(16px,env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+  .ed-row{max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .ed-status{flex:1 1 260px;min-width:0;color:var(--ed-muted)}
+  .ed-status b{color:var(--ed-text);font-weight:600}
+  .ed-status a{color:var(--ed-ok)}
+  .ed-btn{font:600 14px/1 "Hanken Grotesk",Arial,sans-serif;border-radius:999px;padding:10px 16px;border:1px solid rgba(244,242,239,.35);background:transparent;color:var(--ed-text);cursor:pointer}
+  .ed-btn:hover{border-color:var(--ed-text)}
+  .ed-btn:disabled{opacity:.45;cursor:default}
+  .ed-btn.primary{background:var(--ed-text);color:#1c2b26;border-color:var(--ed-text)}
+  .ed-btn.publish{background:var(--ed-ok);color:#1c2b26;border-color:var(--ed-ok)}
+  .ed-btn:focus-visible{outline:2px solid var(--ed-ok);outline-offset:2px}
+  .ed-note{font:14px "Hanken Grotesk",Arial,sans-serif;padding:9px 12px;border-radius:4px;border:1px solid rgba(244,242,239,.35);background:transparent;color:var(--ed-text);width:220px;max-width:100%}
+  .ed-note::placeholder{color:var(--ed-muted)}
+  .ed-panel{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:84px;z-index:101;width:min(560px,calc(100vw - 32px));max-height:min(70vh,640px);overflow:auto;background:#f4f2ef;color:#1c2b26;border:1px solid #d6d0c9;border-radius:4px;box-shadow:0 12px 40px rgba(28,43,38,.25);padding:20px;font:15px/1.45 "Hanken Grotesk",Arial,sans-serif}
+  .ed-panel h4{font:400 22px/1.15 "Young Serif",Georgia,serif;margin:0 0 6px}
+  .ed-panel p{margin:0 0 12px;color:#5c554f}
+  .ed-panel .ed-close{float:right;border:0;background:none;font-size:22px;line-height:1;cursor:pointer;color:#1c2b26}
+  .ed-v{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:12px 0;border-top:1px solid #d6d0c9;align-items:center}
+  .ed-v small{display:block;color:#5c554f;font-family:"IBM Plex Mono",monospace;font-size:12px}
+  .ed-v .ed-tag{font-family:"IBM Plex Mono",monospace;font-size:11px;background:#dbe5dd;padding:1px 6px;border-radius:3px;margin-left:6px}
+  .ed-panel .ed-btn{color:#1c2b26;border-color:#a69e95;padding:8px 14px}
+  .ed-panel .ed-btn.primary{background:#2d5a4a;color:#f4f2ef;border-color:#2d5a4a}
+  .ed-prob{border-top:1px solid #d6d0c9;padding:14px 0}
+  .ed-prob h5{font:600 15px "Hanken Grotesk",Arial,sans-serif;margin:0 0 8px}
+  .ed-mrow{display:grid;grid-template-columns:minmax(0,1.2fr) 64px minmax(0,2fr);gap:6px;margin-bottom:6px}
+  .ed-mrow input{font:14px "Hanken Grotesk",Arial,sans-serif;padding:7px 8px;border:1px solid #d6d0c9;border-radius:4px;background:#fff;color:#1c2b26;min-width:0}
+  .ed-total{font-family:"IBM Plex Mono",monospace;font-size:12px;color:#5c554f}
+  .ed-total.bad{color:#9b2c2c}
+  .ed-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+  @media (max-width:640px){.ed-note{width:100%}.ed-status{flex-basis:100%}}
+</style>
+
+<div class="ed-bar" role="region" aria-label="Site editor">
+  <div class="ed-row">
+    <div class="ed-status" id="edStatus" aria-live="polite">Loading…</div>
+    <input class="ed-note" id="edNote" placeholder="What changed? (optional)" aria-label="What changed">
+    <button class="ed-btn" id="edMix" type="button">Problem mixes</button>
+    <button class="ed-btn" id="edHist" type="button">History</button>
+    <button class="ed-btn" id="edPreview" type="button" aria-pressed="false">Preview</button>
+    <button class="ed-btn primary" id="edSave" type="button">Save</button>
+    <button class="ed-btn publish" id="edPub" type="button">Publish…</button>
+  </div>
+</div>
+<div class="ed-panel" id="edPanel" hidden></div>
+
+<script>
+(function () {
+  var S = window.SWYNKE_STATE;
+  var saved = clone(S.content);      // last saved content
+  var mix = clone(S.content.__mixer); // working copy of the problem mixes
+  var dirty = false, busy = false, editing = true;
+  var $ = function (id) { return document.getElementById(id); };
+  var els = Array.prototype.slice.call(document.querySelectorAll('[data-k]'));
+
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  // ---- in-place editing
+  function setEditing(on) {
+    editing = on;
+    document.body.classList.toggle('ed-editing', on);
+    els.forEach(function (el) { if (on) el.setAttribute('contenteditable', 'true'); else el.removeAttribute('contenteditable'); });
+    $('edPreview').setAttribute('aria-pressed', String(!on));
+    $('edPreview').textContent = on ? 'Preview' : 'Back to editing';
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a');
+    if (editing && a && !e.target.closest('.ed-bar,.ed-panel')) e.preventDefault();
+  }, true);
+  els.forEach(function (el) {
+    el.addEventListener('input', function () { markDirty(); el.classList.toggle('ed-changed', el.innerHTML.trim() !== String(saved[el.dataset.k] || '').trim()); });
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); if (e.shiftKey) document.execCommand('insertLineBreak'); else el.blur(); }
+    });
+    el.addEventListener('paste', function (e) {
+      e.preventDefault();
+      var t = (e.clipboardData || window.clipboardData).getData('text/plain').replace(/\s*\n\s*/g, ' ');
+      document.execCommand('insertText', false, t);
+    });
+  });
+
+  function collect() {
+    var c = clone(saved);
+    els.forEach(function (el) { c[el.dataset.k] = el.innerHTML; });
+    // problem quotes come from the buttons on the page
+    var probs = document.querySelectorAll('.prob');
+    mix.forEach(function (p, i) {
+      var lbl = probs[i] && probs[i].querySelector('[data-k]');
+      if (lbl) p.q = lbl.textContent.trim().replace(/^['‘’"“]+|['‘’"”]+$/g, '');
+    });
+    c.__mixer = clone(mix);
+    var md = document.querySelector('meta[name="description"]');
+    if (md) c['meta-description'] = md.getAttribute('content');
+    return c;
+  }
+  function apply(content) {
+    els.forEach(function (el) { if (content.hasOwnProperty(el.dataset.k)) el.innerHTML = content[el.dataset.k]; el.classList.remove('ed-changed'); });
+    mix = clone(content.__mixer);
+    if (window.swynkeMix) window.swynkeMix(clone(mix));
+  }
+
+  // ---- status
+  function markDirty() { if (!dirty) { dirty = true; status(); } }
+  function status(msg) {
+    var v = S.versions[0], pub = S.published;
+    var parts = [];
+    if (msg) parts.push(msg);
+    else if (dirty) parts.push('<b>Unsaved changes.</b> Click a dashed box to edit, Shift+Enter for a new line.');
+    else parts.push('<b>All changes saved.</b> Last save ' + esc(v.time) + (v.user ? ' by ' + esc(v.user) : '') + '.');
+    if (!msg) parts.push(pub ? (pub.version === S.version ? 'This version is live.' : 'Live site: published ' + esc(pub.time) + '.') : 'Not published from the editor yet.');
+    $('edStatus').innerHTML = parts.join(' ');
+    $('edSave').disabled = busy || !dirty;
+    $('edPub').disabled = busy;
+  }
+  function fail(err) { busy = false; status('<b>Something went wrong:</b> ' + esc(err && err.message || err)); }
+  window.addEventListener('beforeunload', function (e) { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+  // ---- save
+  function save(force, then) {
+    busy = true; status('Saving…');
+    google.script.run.withFailureHandler(fail).withSuccessHandler(function (r) {
+      busy = false;
+      if (r.conflict) { showConflict(r.state); return; }
+      S = r.state; saved = clone(S.content); dirty = false; $('edNote').value = '';
+      els.forEach(function (el) { el.classList.remove('ed-changed'); });
+      status(); if (then) then();
+    }).saveVersion(collect(), force ? null : S.version, $('edNote').value);
+  }
+  $('edSave').onclick = function () { save(false); };
+
+  function showConflict(latest) {
+    var v = latest.versions[0];
+    panel('<h4>Someone else saved first</h4><p>' + esc(v.user || 'Another editor') + ' saved a version at ' + esc(v.time) + ' while you were editing. You can keep yours (it replaces theirs, and theirs stays in History) or load theirs (your unsaved edits are lost).</p>' +
+      '<div class="ed-actions"><button class="ed-btn" id="edTheirs" type="button">Load theirs</button><button class="ed-btn primary" id="edMine" type="button">Keep mine</button></div>');
+    $('edMine').onclick = function () { closePanel(); save(true); };
+    $('edTheirs').onclick = function () { closePanel(); S = latest; saved = clone(S.content); apply(saved); dirty = false; status(); };
+    status();
+  }
+
+  // ---- publish
+  $('edPub').onclick = function () {
+    panel('<h4>Publish to the live site?</h4><p>' + (dirty ? 'Your unsaved changes will be saved first. ' : '') + 'The live site updates about a minute after you publish. Earlier versions stay in History if you need to roll back.</p>' +
+      '<div class="ed-actions"><button class="ed-btn" id="edNo" type="button">Cancel</button><button class="ed-btn primary" id="edYes" type="button">Publish now</button></div>');
+    $('edNo').onclick = closePanel;
+    $('edYes').onclick = function () { closePanel(); if (dirty) save(false, publish); else publish(); };
+  };
+  function publish() {
+    busy = true; status('Publishing…');
+    google.script.run.withFailureHandler(fail).withSuccessHandler(function (st) {
+      busy = false; S = st;
+      status('<b>Published.</b> The live site updates in about a minute. <a href="' + esc(st.published.url) + '" target="_blank" rel="noopener">See the change</a>');
+    }).publishVersion(S.version);
+  }
+
+  // ---- history
+  $('edHist').onclick = function () {
+    var pubV = S.published && S.published.version;
+    var rows = S.versions.map(function (v, i) {
+      return '<div class="ed-v"><div>' + esc(v.time) + (i === 0 ? '<span class="ed-tag">current</span>' : '') + (v.id === pubV ? '<span class="ed-tag">live</span>' : '') +
+        '<small>' + esc(v.user || 'unknown') + (v.note ? ' · ' + esc(v.note) : '') + '</small></div>' +
+        (i === 0 ? '<span></span>' : '<button class="ed-btn" type="button" data-v="' + esc(v.id) + '">Load</button>') + '</div>';
+    }).join('');
+    panel('<button class="ed-close" type="button" aria-label="Close">×</button><h4>History</h4><p>The last ' + S.versions.length + ' saved versions. Loading one puts its text on the page; save to keep it, then publish to put it live.</p>' + rows);
+    Array.prototype.forEach.call($('edPanel').querySelectorAll('[data-v]'), function (b) {
+      b.onclick = function () {
+        b.disabled = true;
+        google.script.run.withFailureHandler(fail).withSuccessHandler(function (content) {
+          closePanel(); apply(content); dirty = true;
+          els.forEach(function (el) { el.classList.toggle('ed-changed', el.innerHTML.trim() !== String(saved[el.dataset.k] || '').trim()); });
+          status('<b>Loaded an earlier version.</b> Save to keep it, then publish to put it live.');
+          $('edSave').disabled = false;
+        }).getVersion(b.dataset.v);
+      };
+    });
+  };
+
+  // ---- problem mixes
+  $('edMix').onclick = function () {
+    var probs = document.querySelectorAll('.prob');
+    var html = mix.map(function (p, i) {
+      var label = probs[i] ? probs[i].textContent.replace(/^[A-E]/, '').trim() : p.q;
+      var rows = [];
+      for (var r = 0; r < 5; r++) {
+        var m = p.m[r] || ['', '', ''];
+        rows.push('<div class="ed-mrow"><input aria-label="Speciality" placeholder="Speciality" data-p="' + i + '" data-r="' + r + '" data-c="0" value="' + esc(m[0]) + '">' +
+          '<input aria-label="Percent" placeholder="%" inputmode="numeric" data-p="' + i + '" data-r="' + r + '" data-c="1" value="' + esc(m[1]) + '">' +
+          '<input aria-label="What they bring" placeholder="What they bring" data-p="' + i + '" data-r="' + r + '" data-c="2" value="' + esc(m[2]) + '"></div>');
+      }
+      return '<div class="ed-prob"><h5>' + esc(label) + '</h5>' + rows.join('') + '<div class="ed-total" id="edTot' + i + '"></div></div>';
+    }).join('');
+    panel('<button class="ed-close" type="button" aria-label="Close">×</button><h4>Problem mixes</h4><p>Up to five specialities per problem. Each mix should add up to 100. Edit the problem names on the page itself.</p>' + html +
+      '<div class="ed-actions"><button class="ed-btn primary" id="edMixDone" type="button">Done</button></div>');
+    function totals() {
+      mix.forEach(function (p, i) {
+        var t = 0; Array.prototype.forEach.call($('edPanel').querySelectorAll('[data-p="' + i + '"][data-c="1"]'), function (inp) { t += Number(inp.value) || 0; });
+        var el = $('edTot' + i); el.textContent = 'Total ' + t + (t === 100 ? '' : ' (should be 100)'); el.classList.toggle('bad', t !== 100);
+      });
+    }
+    $('edPanel').oninput = function () {
+      mix = mix.map(function (p, i) {
+        var rows = [];
+        for (var r = 0; r < 5; r++) {
+          var g = function (c) { return $('edPanel').querySelector('[data-p="' + i + '"][data-r="' + r + '"][data-c="' + c + '"]').value.trim(); };
+          var n = Math.round(Number(g(1)));
+          if (g(0) && n > 0) rows.push([g(0), n, g(2)]);
+        }
+        return { q: p.q, m: rows.length ? rows : p.m };
+      });
+      totals(); markDirty();
+      if (window.swynkeMix) window.swynkeMix(clone(mix));
+    };
+    totals();
+    $('edMixDone').onclick = closePanel;
+  };
+
+  // ---- panel helpers
+  function panel(html) {
+    var p = $('edPanel'); p.oninput = null; p.innerHTML = html; p.hidden = false;
+    var c = p.querySelector('.ed-close'); if (c) c.onclick = closePanel;
+    var f = p.querySelector('button.primary,button,input'); if (f) f.focus();
+  }
+  function closePanel() { $('edPanel').hidden = true; $('edPanel').innerHTML = ''; }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('edPanel').hidden) closePanel(); });
+
+  $('edPreview').onclick = function () { setEditing(!editing); };
+  setEditing(true);
+  status();
+})();
+</script>
